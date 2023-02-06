@@ -1,0 +1,22 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 200vh;
+}
+
+.blackbar {
+  height: 7.5vh;
+  width: 100vw;
+  padding: 0;
+  background-color: #212529;
+  margin: 0;
+}
+
+.video {
+  padding: 0;
+  height: 95vh;
+  width: 100vw;
+  background-color: aqua;
+}
