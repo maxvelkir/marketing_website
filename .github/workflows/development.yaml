@@ -1,25 +1,25 @@
-# name: Development CI
+name: Development CI
 
-# on:
-#   push:
-#     branches: ["main"]
-#   pull_request:
-#     branches: ["main"]
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
-# jobs:
-#   pre_build:
-#     name: Run basic checks and formatting
-#     runs-on: ubuntu-latest
+jobs:
+  pre_build:
+    name: Run basic checks and formatting
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v3
 
-#       - name: Use Node.js
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: "19.x"
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "19.x"
 
-#       - run: |
-#              yarn --frozen-lockfile
-#              yarn prettier --check .
-#              yarn prettier --write .
+      - run: |
+          yarn --frozen-lockfile
+          yarn prettier --check .
+          yarn prettier --write .
