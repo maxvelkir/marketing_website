@@ -9,7 +9,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-and-push-image:
+  docker-build-and-push-image:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -39,3 +39,36 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  terraform-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - uses: hashicorp/setup-terraform@v2
+
+      - run: |
+          cd terraform
+          terraform init
+
+      - name: Terraform apply
+        id: apply
+        run: terraform plan -no-color -var "do_token=${{ secrets.DO_PAT }}" -var "pvt_key=${{ secrets.DO_SSH }}" >> $GITHUB_OUTPUT
+        continue-on-error: true
+
+    ansible-configure:
+      runs-on: ubuntu-lastest
+      needs: terraform-deloy
+
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+
+        - name: Configure inventory
+          run: |
+            cd ansible
+            echo ${{ join(terraform-deploy.steps.apply.outputs.*, '\n') }} | grep -E -o "[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}" > ansible_hosts
+            cat ansible_hosts
+            ansible-playbook --private-key ${{ secrets.DO_SSH }} playbook/configure-droplets.yaml
