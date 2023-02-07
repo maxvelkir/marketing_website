@@ -19,8 +19,7 @@
 #         with:
 #           node-version: "19.x"
 
-#       - run: yarn --frozen-lockfile
-
-#       - run: yarn prettier --check .
-
-#       - run: yarn prettier --write .
+#       - run: |
+#              yarn --frozen-lockfile
+#              yarn prettier --check .
+#              yarn prettier --write .
