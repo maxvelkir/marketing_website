@@ -62,7 +62,7 @@ jobs:
 
   ansible-configure:
     runs-on: ubuntu-lastest
-    needs: terraform-deloy
+    needs: terraform-deploy
 
     steps:
       - name: Checkout repository
