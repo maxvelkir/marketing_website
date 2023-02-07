@@ -98,7 +98,9 @@ jobs:
       - name: Get secret key
         working-directory: ./ansible
         run: |
-          echo "${{ secrets.DO_SSH_PRIVATE }}" > do_ssh_private
+          echo "-----BEGIN OPENSSH PRIVATE KEY-----" > do_ssh_private
+          echo "${{ secrets.DO_SSH_PRIVATE }}" >> do_ssh_private
+          echo "-----END OPENSSH PRIVATE KEY-----" >> do_ssh_private
           chmod 400 do_ssh_private
 
       - name: Run Ansible
