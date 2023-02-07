@@ -57,7 +57,7 @@ jobs:
 
       - name: Setup Terraform backend-config
         working-directory: ./terraform
-        run: echo -e "access_key=\"${{ secrets.DO_SPACES_PUBLIC }}\"\nprivate_key=\"${{ secrets.DO_SPACES_PRIVATE }}\"" > backend-config.hcl
+        run: echo -e "access_key=\"${{ secrets.DO_SPACES_PUBLIC }}\"\nsecret_key=\"${{ secrets.DO_SPACES_PRIVATE }}\"" > backend-config.hcl
 
       - name: Initialise Terraform
         working-directory: ./terraform
