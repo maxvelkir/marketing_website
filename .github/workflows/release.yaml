@@ -51,11 +51,6 @@ jobs:
 
       - uses: hashicorp/setup-terraform@v2
 
-      - name: Install doctl and authenticate
-        run: |
-          sudo snap install doctl
-          doctl auth init -t ${{ secrets.DO_PAT }}
-
       - name: Initialise Terraform
         run: |
           cd terraform
