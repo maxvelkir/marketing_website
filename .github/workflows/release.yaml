@@ -43,7 +43,7 @@ jobs:
   terraform-deploy:
     runs-on: ubuntu-latest
     outputs:
-      terraform-output: ${{ steps.apply.outputs }}
+      terraform-output: ${{ steps.apply.outputs.* }}
 
     steps:
       - name: Checkout repository
