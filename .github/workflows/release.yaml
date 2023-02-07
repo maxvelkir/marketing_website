@@ -59,7 +59,7 @@ jobs:
       - name: Terraform apply
         run: |
           cd terraform
-          terraform apply -no-color -var "do_token=${{ secrets.DO_PAT }}" -var "do_ssh_key=${{ secrets.DO_SSH_PUBLIC }}"
+          echo yes | terraform apply -no-color -var "do_token=${{ secrets.DO_PAT }}" -var "do_ssh_key=${{ secrets.DO_SSH_PUBLIC }}"
 
       - name: Pass down terraform output
         id: terraform-output
