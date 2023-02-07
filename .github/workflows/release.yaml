@@ -95,5 +95,4 @@ jobs:
         working-directory: ./ansible
         run: |
           grep -E -o "[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}" tf-output.txt > ansible_hosts
-          cat ansible_hosts
-          ansible-playbook --private-key ${{ secrets.DO_SSH_PRIVATE }} playbook/configure-droplets.yaml
+          ansible-playbook --private-key ${{ secrets.DO_SSH_PRIVATE }} playbooks/configure-droplets.yaml
