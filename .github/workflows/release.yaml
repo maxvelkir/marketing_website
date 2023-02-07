@@ -53,6 +53,7 @@ jobs:
 
       - run: |
           cd terraform
+          pwd
           terraform init
 
       - name: Terraform apply
@@ -61,8 +62,7 @@ jobs:
 
       - name: Pass down terraform output
         id: terraform-output
-        run: |
-          echo "TFO=$( terraform output )" >> $GITHUB_OUTPUT
+        run: echo TFO=$(terraform output) >> $GITHUB_OUTPUT
 
   ansible-configure:
     runs-on: ubuntu-lastest
