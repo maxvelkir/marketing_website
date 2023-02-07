@@ -9,41 +9,41 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  docker-build-and-push-image:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+  # docker-build-and-push-image:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     packages: write
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@v2.1.0
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Log in to the Container registry
+  #       uses: docker/login-action@v2.1.0
+  #       with:
+  #         registry: ${{ env.REGISTRY }}
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        uses: docker/metadata-action@v4.3.0
-        id: meta
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+  #     - name: Extract metadata (tags, labels) for Docker
+  #       uses: docker/metadata-action@v4.3.0
+  #       id: meta
+  #       with:
+  #         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4.0.0
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+  #     - name: Build and push Docker image
+  #       uses: docker/build-push-action@v4.0.0
+  #       with:
+  #         context: .
+  #         push: true
+  #         tags: ${{ steps.meta.outputs.tags }}
+  #         labels: ${{ steps.meta.outputs.labels }}
 
   terraform-deploy:
     runs-on: ubuntu-latest
     outputs:
-      terraform-output: ${{ steps.apply.outputs.* }}
+      terraform-output: ${{ steps.apply.outputs.terraform-output }}
 
     steps:
       - name: Checkout repository
@@ -56,9 +56,13 @@ jobs:
           terraform init
 
       - name: Terraform apply
-        id: apply
-        run: terraform plan -no-color -var "do_token=${{ secrets.DO_PAT }}" -var "pvt_key=${{ secrets.DO_SSH }}" >> $GITHUB_OUTPUT
+        run: terraform plan -no-color -var "do_token=${{ secrets.DO_PAT }}" -var "pvt_key=${{ secrets.DO_SSH }}"
         continue-on-error: true
+
+      - name: Pass down terraform output
+        id: terraform-output
+        run: |
+          echo "TFO=$( terraform output )" >> $GITHUB_OUTPUT
 
   ansible-configure:
     runs-on: ubuntu-lastest
