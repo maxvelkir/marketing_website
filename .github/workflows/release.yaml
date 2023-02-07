@@ -71,7 +71,7 @@ jobs:
 
       - name: Save Terraform output
         working-directory: ./terraform
-        run: terraform output >> tf-output.txt
+        run: terraform output >> tf-output.hcl
 
       - uses: actions/upload-artifact@v3
         with:
