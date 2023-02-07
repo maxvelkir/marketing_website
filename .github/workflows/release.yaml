@@ -51,16 +51,15 @@ jobs:
 
       - uses: hashicorp/setup-terraform@v2
 
-      - run: |
+      - name: Initialise Terraform
+        run: |
           cd terraform
-          pwd
           terraform init
 
       - name: Terraform apply
         run: |
-          pwd
-          terraform plan -no-color -var "do_token=${{ secrets.DO_PAT }}" -var "pvt_key=${{ secrets.DO_SSH }}"
-        continue-on-error: true
+          cd terraform
+          terraform apply -no-color -var "do_token=${{ secrets.DO_PAT }}" -var "pvt_key=${{ secrets.DO_SSH }}"
 
       - name: Pass down terraform output
         id: terraform-output
