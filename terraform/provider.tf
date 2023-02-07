@@ -8,12 +8,13 @@ terraform {
 }
 
 variable "do_token" {}
-variable "pvt_key" {}
+variable "do_ssh_key" {}
 
 provider "digitalocean" {
   token = var.do_token
 }
 
-data "digitalocean_ssh_key" "main" {
-  name = "main"
+resource "digitalocean_ssh_key" "default" {
+  name       = "default"
+  public_key = var.do_ssh_key
 }

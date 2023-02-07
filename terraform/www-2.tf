@@ -4,6 +4,6 @@ resource "digitalocean_droplet" "www-2" {
   region = "nyc3"
   size   = "s-1vcpu-1gb"
   ssh_keys = [
-    data.digitalocean_ssh_key.main.id
+    digitalocean_ssh_key.default.fingerprint
   ]
 }
