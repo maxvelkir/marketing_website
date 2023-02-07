@@ -71,6 +71,6 @@ jobs:
       - name: Configure inventory
         run: |
           cd ansible
-          echo ${{ join(terraform-deploy.steps.apply.outputs.*, '\n') }} | grep -E -o "[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}" > ansible_hosts
+          echo ${{ needs.terraform-deploy.outputs.terraform-output }} | grep -E -o "[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}" > ansible_hosts
           cat ansible_hosts
           ansible-playbook --private-key ${{ secrets.DO_SSH }} playbook/configure-droplets.yaml
