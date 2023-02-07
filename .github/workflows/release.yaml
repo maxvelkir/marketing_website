@@ -101,4 +101,4 @@ jobs:
 
       - name: Run Ansible
         working-directory: ./ansible
-        run: ansible-playbook --private-key do_ssh_private playbooks/configure-droplets.yaml
+        run: ansible-playbook playbooks/configure-droplets.yaml
