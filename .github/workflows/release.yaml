@@ -57,7 +57,9 @@ jobs:
           terraform init
 
       - name: Terraform apply
-        run: terraform plan -no-color -var "do_token=${{ secrets.DO_PAT }}" -var "pvt_key=${{ secrets.DO_SSH }}"
+        run: |
+          pwd
+          terraform plan -no-color -var "do_token=${{ secrets.DO_PAT }}" -var "pvt_key=${{ secrets.DO_SSH }}"
         continue-on-error: true
 
       - name: Pass down terraform output
